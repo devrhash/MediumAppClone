@@ -1,44 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './PostList.css'
+import axios from 'axios';
+
 const PostList = () => {
-  // Sample data for demonstration purposes
-  const posts = [
-    {
-      id: 1,
-      title: 'Post 1',
-      topic: 'Technology',
-      featuredImage: 'https://placeimg.com/300/200/tech',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-      dateTime: '2023-08-03 10:30 AM',
-      author: 'John Doe',
-    },
-    {
-      id: 2,
-      title: 'Post 2',
-      topic: 'Travel',
-      featuredImage: 'https://placeimg.com/300/200/nature',
-      text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem...',
-      dateTime: '2023-08-02 02:15 PM',
-      author: 'Jane Smith',
-    },
-    // Add more posts as needed
-  ];
+
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+
+    axios.get('http://127.0.0.1:3000/posts/all')
+      .then((response) => {
+        setPosts(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+    
+      });
+  }, []);
 
   return (
     <div>
      
       {posts.map((post) => (
         <div key={post.id} className="post">
-          <img src={post.featuredImage} alt={post.title} />
           <div className="post-details">
           <h3>{post.title}</h3>
             <p>Topic: {post.topic}</p>
             <p>{post.text}</p>
-            <p>Published on: {post.dateTime}</p>
+            <p>Published on: {post.published_at}</p>
             <p>Author: {post.author}</p>
             <Link to={`/post/${post.id}`}>View Details</Link>
           </div>
+          <img src={post.image} alt={post.title} />
         </div>
       ))}
     </div>
