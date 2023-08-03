@@ -1,27 +1,48 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './PostDetail.css';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const PostDetail = () => {
   const { postId } = useParams();
 
-  // Sample data for demonstration purposes
-  const post = {
-    id: 1,
-    title: 'Post 1',
-    topic: 'Technology',
-    featuredImage: 'https://placeimg.com/600/400/tech',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-    dateTime: '2023-08-03 10:30 AM',
-    author: 'John Doe',
-  };
+  const [post, setPosts] = useState([]);
+  const navigate=useNavigate();
+  useEffect(() => {
+    
+    axios.get(`http://127.0.0.1:3000/get/post/${postId}`)
+      .then((response) => {
+        setPosts(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+    
+      });
+  }, []);
+  const handleDelete=()=>{
+    axios.delete(`http://127.0.0.1:3000/delete/posts/${postId}`)
+      .then((response) => {
+        console.log(response.data);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+    
+      });
+
+
+  }
 
   return (
     <div className="post-details-container">
-      <h2>Post Details</h2>
+   
       <div className="post-details">
-        <img src={post.featuredImage} alt={post.title} />
+        
         <h3>{post.title}</h3>
+        <img src={post.image} alt={post.title} />
         <p>Topic: {post.topic}</p>
         <p>{post.text}</p>
         <p>Published on: {post.dateTime}</p>
@@ -30,7 +51,7 @@ const PostDetail = () => {
       {/* Add edit and delete options */}
       <div className="edit-delete-options">
         <Link to={`/post/${postId}/edit`}>Edit</Link>
-        <button>Delete</button>
+        <button onClick={handleDelete}>Delete</button>
       </div>
     </div>
   );

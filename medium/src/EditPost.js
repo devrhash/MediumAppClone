@@ -1,83 +1,92 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import axios from 'axios'; 
 import './AddPost.css';
+import { useNavigate,useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+
 
 const EditPost = () => {
+
+
+  const navigate = useNavigate();
+  const [title, setTitle] = useState('');
+  const [topic, setTopic] = useState('');
+  const [imageFile, setImageFile] = useState(null); 
+  const [text, setText] = useState('');
   const { postId } = useParams();
 
-  const [post, setPost] = useState({
-    title: '',
-    topic: '',
-    featuredImage: '',
-    text: '',
-  });
-
   useEffect(() => {
-    // Fetch the post data from the API based on the post ID
-    fetch(`YOUR_API_ENDPOINT/${postId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the state with the fetched post data
-        setPost(data);
+    
+    axios.get(`http://127.0.0.1:3000/get/post/${postId}`)
+      .then((response) => {
+        setTitle(response.data.title);
+        setTopic(response.data.topic);
+        setText(response.data.text);
+        setImageFile(response.data.imageFile);
+        console.log(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching post:', error);
-        // Implement error handling logic here
+        console.error('Error fetching posts:', error);
+    
       });
-  }, [postId]);
+  }, []);
+
+
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setPost({ ...post, featuredImage: file });
+    const formData = new FormData();
+    formData.append('image', file, 'filename.jpg', { charset: 'utf-8' });
+
+    axios.post('http://127.0.0.1:3000/upload',formData).then((response)=>{
+        setImageFile(response.data.file_url);
+    })
+    .catch((error)=>{
+        console.log("hello");
+        console.error(error);
+    })
   };
 
   const handleSave = () => {
-    // Prepare the form data to send to the server
-    const formData = new FormData();
-    formData.append('title', post.title);
-    formData.append('topic', post.topic);
-    formData.append('text', post.text);
-    formData.append('image', post.featuredImage);
+    const postData = {
+        title: title,
+        topic: topic,
+        text: text,
+        author_id:1,
+        featured_image:imageFile
+      };
 
-    // Call the API to update the post data
-    fetch(`YOUR_API_ENDPOINT/${postId}`, {
-      method: 'PUT',
-      body: formData,
-    })
+
+    axios.put(`http://127.0.0.1:3000/edit/post/${postId}`, postData)
       .then((response) => {
-        if (response.ok) {
-          console.log('Post updated successfully!');
-          // Implement any success message or redirect logic here
-        } else {
-          console.error('Error updating post:', response.status);
-          // Implement error handling logic here
-        }
+        console.log('Post saved!', response.data);
       })
       .catch((error) => {
-        console.error('Error updating post:', error);
+        console.error('Error saving post:', error);
         // Implement error handling logic here
       });
+      navigate('/');
   };
 
   return (
     <div className="add-post-container">
-      <h2>Edit Post</h2>
+      <h2>Add Post</h2>
       <div className="form-group">
         <label>Title:</label>
-        <input type="text" value={post.title} onChange={(e) => setPost({ ...post, title: e.target.value })} />
+        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
       <div className="form-group">
         <label>Topic:</label>
-        <input type="text" value={post.topic} onChange={(e) => setPost({ ...post, topic: e.target.value })} />
+        <input type="text" value={topic} onChange={(e) => setTopic(e.target.value)} />
       </div>
-      {/* Add file input for image upload */}
+
       <div className="form-group">
         <label>Featured Image:</label>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
+        <input type="file" accept="image/*"  onChange={handleImageChange} />
       </div>
       <div className="form-group">
         <label>Text:</label>
-        <textarea value={post.text} onChange={(e) => setPost({ ...post, text: e.target.value })} />
+        <textarea value={text} onChange={(e) => setText(e.target.value)} />
       </div>
       <button className="save-button" onClick={handleSave}>
         Save
@@ -87,3 +96,4 @@ const EditPost = () => {
 };
 
 export default EditPost;
+

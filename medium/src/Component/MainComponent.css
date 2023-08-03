@@ -12,8 +12,49 @@
   
   .filters-search {
     padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
+    /* border: 1px solid #ccc; */
+    /* background-color: #f0f0f0; */
+    margin-bottom: 20px;
+  }
+
+  .filters-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 20px;
   }
   
+  .filters-search input,
+  .filters-search select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-width: 200px;
+  }
+ 
+  
+  .filters-search select {
+    min-width: 200px;
+  }
+  .filter-item {
+    flex-basis: calc(50% - 5px); /* Set each filter to take 50% of the container width minus gap */
+  }
+ 
+  .search-bar {
+    width: 50%; /* Set the desired width for the search bar */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-width: 400px
+  }
+  .search{
+    margin-left: 130px;
+    margin-right: auto;
+    /* align-items: center; */
+    /* justify-content: center; */
+  }

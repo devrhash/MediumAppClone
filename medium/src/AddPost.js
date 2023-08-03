@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios for API calls
 import './AddPost.css';
+import { useNavigate } from 'react-router-dom';
 
 const AddPost = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [topic, setTopic] = useState('');
   const [imageFile, setImageFile] = useState(null); // State to store the selected image file
@@ -10,27 +12,40 @@ const AddPost = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file, 'filename.jpg', { charset: 'utf-8' });
+
+    axios.post('http://127.0.0.1:3000/upload',formData).then((response)=>{
+        setImageFile(response.data.file_url);
+    })
+    .catch((error)=>{
+        console.log("hello");
+        console.error(error);
+    })
     setImageFile(file);
   };
 
   const handleSave = () => {
-    // Prepare the form data to send to the server
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('topic', topic);
-    formData.append('text', text);
-    formData.append('image', imageFile);
+    const postData = {
+        title: title,
+        topic: topic,
+        text: text,
+        author_id:1,
+        featured_image:imageFile
+      };
 
-    // Call the API to store the post data and image
-    axios.post('YOUR_API_ENDPOINT', formData)
+
+    axios.post('http://127.0.0.1:3000/create/post', postData)
       .then((response) => {
         console.log('Post saved!', response.data);
-        // Implement any success message or redirect logic here
+        
+        
       })
       .catch((error) => {
         console.error('Error saving post:', error);
         // Implement error handling logic here
       });
+      navigate('/');
   };
 
   return (
@@ -44,7 +59,7 @@ const AddPost = () => {
         <label>Topic:</label>
         <input type="text" value={topic} onChange={(e) => setTopic(e.target.value)} />
       </div>
-      {/* Add file input for image upload */}
+
       <div className="form-group">
         <label>Featured Image:</label>
         <input type="file" accept="image/*" onChange={handleImageChange} />
