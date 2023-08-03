@@ -23,4 +23,23 @@ class AuthorsController < ApplicationController
           render json: { error: 'Invalid email or password' }, status: :unauthorized
         end
       end
+    
+    def show_all_authors
+      authors =  Author.all.select(:id,:name)
+      render json: authors, status: :ok
+    end
+
+    def search_author
+      if params[:search].present?
+        search_query = params[:search].strip.downcase
+        
+        where_clause = "lower(name) LIKE '%"+search_query+"%'"
+        # Find articles that match the search query in title, description, or tags
+        authors = Author.where(where_clause).select(:id,:name)
+      else
+        authors = Author.all.select(:id,:name)
+      end
+
+      render json: authors, status: :ok
+    end
 end

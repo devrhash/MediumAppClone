@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   delete '/delete/posts/:id', to: 'posts#delete_post'
   get '/posts/search', to: 'posts#search'
   get '/get/post/:id', to: 'posts#get_post'
+  get 'get/post/author/:author_id', to: 'posts#filter_by_author'
+  get 'get/post/filter/date/:date', to: 'posts#filter_by_date'
+  get 'get/post/filter/likesAndComments/:filter_param', to: 'posts#filter_likes_commments'
 
   # upload image
   post '/upload', to: 'posts#upload'
@@ -16,4 +19,18 @@ Rails.application.routes.draw do
   # add author
   post '/create/author', to: 'authors#create'
   post '/author/login', to: 'authors#login'
+  get '/author/showAll', to: 'authors#show_all_authors'
+  get '/author/search', to: 'authors#search_author'
+
+  # like 
+  post '/like/create/:post_id', to: 'likes#create_like'
+  delete '/like/remove/:post_id', to: 'likes#remove_like'
+  get '/like/already/liked', to: 'likes#has_liked'
+  get '/like/totalLikes/:post_id', to: 'likes#total_like'
+
+  # comment
+  post '/comment/create', to: 'comments#create_comment'
+  delete '/comment/delete/:comment_id', to: 'comments#remove_comment'
+  get '/comment/all/:post_id', to: 'comments#get_comments'
 end
+
