@@ -12,4 +12,8 @@ Rails.application.routes.draw do
 
   # upload image
   post '/upload', to: 'posts#upload'
+
+  # add author
+  post '/create/author', to: 'authors#create'
+  post '/author/login', to: 'authors#login'
 end
