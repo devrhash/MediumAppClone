@@ -73,3 +73,5 @@ end
 
 
 gem 'rack-cors'
+gem 'bcrypt'
+gem 'jwt'

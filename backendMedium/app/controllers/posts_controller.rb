@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+    before_action :authorize_request, only: [:create, :edit_post, :upload,:delete_post]
+
     def showAll
         posts = Post.includes(:author).all
         post_data = posts.map do |post|
