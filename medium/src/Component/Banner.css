@@ -1,0 +1,16 @@
+.banner {
+    background-color: #ffc017;
+    color: #333;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    height: auto;
+  
+    display: flex;
+
+  }
+  
+  .inner-box {
+    flex: 1; 
+    height: auto;
+  }
