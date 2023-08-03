@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   get '/posts/all', to: 'posts#showAll'
   post '/create/post', to: 'posts#create'
   put '/edit/post/:id', to: 'posts#edit_post'
-  
+  delete '/delete/posts/:id', to: 'posts#delete_post'
+
   # upload image
   post '/upload', to: 'posts#upload'
 end
