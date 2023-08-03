@@ -1,0 +1,19 @@
+.main-container {
+    display: flex;
+  }
+  
+  .left-container {
+    flex: 1;
+  }
+  
+  .right-container {
+    flex: 1;
+  }
+  
+  .filters-search {
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
+  }
+  
