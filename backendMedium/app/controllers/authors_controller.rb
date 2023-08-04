@@ -1,5 +1,5 @@
 class AuthorsController < ApplicationController
-    before_action :authorize_request, only: [:follow_unfollow,:check_follow]
+    before_action :authorize_request, only: [:follow_unfollow,:check_follow,:update_author,:author_details]
     def create
         author_params = JSON.parse(request.body.read)
         # password = author_params['password']
@@ -68,5 +68,22 @@ class AuthorsController < ApplicationController
           render json: { error: 'Failed to follow the author.' }, status: :unprocessable_entity
         end
       end
+    end
+
+    def update_author
+      author_params = JSON.parse(request.body.read)
+      author = Author.find(@current_author_id)
+      author.about = author_params["about"]
+      if author.save
+        render json: { message: 'Author updated successfully' }, status: :ok
+      else
+        render json: { errors: author.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+
+    def author_details
+      author = Author.find(@current_author_id)
+      author = author.slice(:name, :email, :followers_count, :about)
+      render json: author,status: :ok
     end
 end

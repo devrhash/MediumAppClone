@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_04_035009) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_04_062953) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_035009) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.integer "followers_count", default: 0
+    t.text "about"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -85,7 +86,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_035009) do
     t.integer "comments_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "view_count", default: 0, null: false
+    t.integer "reading_time", default: 0
+    t.integer "topic_id"
     t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["topic_id"], name: "index_posts_on_topic_id"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -95,4 +106,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_035009) do
   add_foreign_key "likes", "authors"
   add_foreign_key "likes", "posts"
   add_foreign_key "posts", "authors"
+  add_foreign_key "posts", "topics"
 end
