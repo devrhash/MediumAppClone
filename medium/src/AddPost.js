@@ -50,8 +50,6 @@ const AddPost = () => {
     axios.post('http://127.0.0.1:3000/create/post', postData,{headers})
       .then((response) => {
         console.log('Post saved!', response.data);
-        
-        
       })
       .catch((error) => {
         console.error('Error saving post:', error);
