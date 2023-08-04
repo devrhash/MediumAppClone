@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios'; // Import Axios for API calls
 import './AddPost.css';
 import { useNavigate } from 'react-router-dom';
@@ -9,13 +9,25 @@ const AddPost = () => {
   const [topic, setTopic] = useState('');
   const [imageFile, setImageFile] = useState(null); // State to store the selected image file
   const [text, setText] = useState('');
+  const jwtToken = localStorage.getItem('jwtToken');
+   
+  const headers = {
+    'authToken': jwtToken,
+  };
+  useEffect(()=>{
+    if(!jwtToken)
+    {
+        navigate('/login');
 
+    }
+
+  })
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('image', file, 'filename.jpg', { charset: 'utf-8' });
-
-    axios.post('http://127.0.0.1:3000/upload',formData).then((response)=>{
+   
+    axios.post('http://127.0.0.1:3000/upload',formData,{headers}).then((response)=>{
         setImageFile(response.data.file_url);
     })
     .catch((error)=>{
@@ -35,7 +47,7 @@ const AddPost = () => {
       };
 
 
-    axios.post('http://127.0.0.1:3000/create/post', postData)
+    axios.post('http://127.0.0.1:3000/create/post', postData,{headers})
       .then((response) => {
         console.log('Post saved!', response.data);
         

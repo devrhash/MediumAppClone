@@ -10,6 +10,8 @@ const MainComponent = () => {
     comments: '',
     search:''
   });
+  
+ 
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +26,7 @@ const MainComponent = () => {
     { id: 3, name: 'Michael Johnson' },
     // Add more authors as needed
   ];
+  
 
 
   return (

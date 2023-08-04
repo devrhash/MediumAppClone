@@ -35,24 +35,41 @@ const PostDetail = () => {
 
 
   }
+  const dateTimeString = post.published_at;
+
+const dateObj = new Date(dateTimeString);
+
+
+const year = dateObj.getFullYear();
+const month = dateObj.getMonth() + 1; 
+const day = dateObj.getDate();
+
+const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
   return (
     <div className="post-details-container">
    
       <div className="post-details">
         
-        <h3>{post.title}</h3>
+        <h3 className='post-title'>{post.title}</h3>
+        <p className='post-topic'>{post.topic}</p>
+        <div className='author'>
+        <i class="fa fa-user fa-lg"></i>
+        <p className='author'>{post.author}</p>
+        <a href='/'>Follow</a>
+        </div>
+
+        <p className='published-at'>Published On:  {formattedDate}</p>
         <img src={post.image} alt={post.title} />
-        <p>Topic: {post.topic}</p>
-        <p>{post.text}</p>
-        <p>Published on: {post.dateTime}</p>
-        <p>Author: {post.author}</p>
+        
+        <p className='post-text'>{post.text}</p>
+
       </div>
       {/* Add edit and delete options */}
-      <div className="edit-delete-options">
+      {/* <div className="edit-delete-options">
         <Link to={`/post/${postId}/edit`}>Edit</Link>
         <button onClick={handleDelete}>Delete</button>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,9 +1,9 @@
 .post {
     display: flex;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add the box shadow */
     padding: 10px;
+    margin-left: 40px;
   }
   
   .post img {

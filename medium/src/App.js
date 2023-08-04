@@ -6,6 +6,8 @@ import PostDetail from './Component/PostDetail';
 import AddPost from './AddPost';
 import EditPost from './EditPost';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SignUp from './Component/SignUp';
+import Login from './Component/Login';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path="/post/:postId" element={<PostDetail />} />
             <Route path="/add" element={<AddPost />} />
             <Route path="/post/:postId/edit" element={<EditPost />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
       </div>
