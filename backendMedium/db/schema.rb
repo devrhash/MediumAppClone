@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_04_062953) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_04_113326) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -59,6 +59,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_062953) do
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
+  create_table "drafts", force: :cascade do |t|
+    t.string "title"
+    t.string "featured_image"
+    t.string "topic_name"
+    t.text "text"
+    t.integer "author_id", null: false
+    t.integer "topic_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_drafts_on_author_id"
+    t.index ["topic_id"], name: "index_drafts_on_topic_id"
+  end
+
   create_table "follows", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
@@ -73,6 +86,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_062953) do
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_likes_on_author_id"
     t.index ["post_id"], name: "index_likes_on_post_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "amount"
+    t.string "status"
+    t.string "payment_intent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "posts", force: :cascade do |t|
@@ -103,6 +124,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_062953) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "authors"
   add_foreign_key "comments", "posts"
+  add_foreign_key "drafts", "authors"
+  add_foreign_key "drafts", "topics"
   add_foreign_key "likes", "authors"
   add_foreign_key "likes", "posts"
   add_foreign_key "posts", "authors"

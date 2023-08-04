@@ -62,20 +62,36 @@ class PostsController < ApplicationController
 
 
 
+    # def create
+    #     post_params = JSON.parse(request.body.read)
+    #     @post = Post.new(JSON.parse(request.body.read))
+    #     author_id =  @current_author_id
+    #     @post.author_id = author_id
+    #     topic = Topic.find(post_params["topic_id"])
+    #     @post.topic = topic.name
+    #     @post.reading_time = reading_time(post_params["text"])
+    #     if @post.save
+    #       render json: {message:"Post Has been created"}, status: :created
+    #     else
+    #       render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
+    #     end
+    # end
+
+
     def create
-        post_params = JSON.parse(request.body.read)
-        @post = Post.new(JSON.parse(request.body.read))
-        author_id =  @current_author_id
-        @post.author_id = author_id
-        topic = Topic.find(post_params["topic_id"])
-        @post.topic = topic.name
-        @post.reading_time = reading_time(post_params["text"])
-        if @post.save
-          render json: {message:"Post Has been created"}, status: :created
-        else
-          render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
-        end
-    end
+      post_params = JSON.parse(request.body.read)
+      @post = Post.new(JSON.parse(request.body.read))
+      author_id =  @current_author_id
+      @post.author_id = author_id
+      topic = Topic.find(1)
+      @post.topic = post_params["topic"]
+      @post.reading_time = reading_time(post_params["text"])
+      if @post.save
+        render json: {message:"Post Has been created"}, status: :created
+      else
+        render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
+      end
+  end
 
 
     def edit_post
