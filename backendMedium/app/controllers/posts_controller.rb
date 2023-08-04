@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-    before_action :authorize_request, only: [:create, :edit_post, :upload,:delete_post]
+    before_action :authorize_request, only: [:create, :edit_post, :upload,:delete_post,:my_posts]
 
     def showAll
         posts = Post.includes(:author).all
@@ -39,12 +39,33 @@ class PostsController < ApplicationController
         render json: post_data
     end
 
+    def my_posts
+      author_id = @current_author_id
+      posts = Post.joins(:author).where(author_id: author_id)
+      post_data = posts.map do |post|
+        {
+          id: post.id,
+          title: post.title,
+          topic: post.topic,
+          text: post.text,
+          image: post.featured_image,
+          published_at: post.published_at,
+          author_name: post.author.name,
+          likes_count: post.likes_count,
+          comments_count: post.comments_count
+        }
+      end
+
+      render json: post_data,status: :ok
+
+    end
 
 
 
     def create
         @post = Post.new(JSON.parse(request.body.read))
-         
+        author_id =  @current_author_id
+        @post.author_id = author_id
         if @post.save
           render json: {message:"Post Has been created"}, status: :created
         else

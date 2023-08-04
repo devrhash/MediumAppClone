@@ -1,4 +1,5 @@
 class AuthorsController < ApplicationController
+    before_action :authorize_request, only: [:follow_unfollow,:check_follow]
     def create
         author_params = JSON.parse(request.body.read)
         # password = author_params['password']
@@ -41,5 +42,31 @@ class AuthorsController < ApplicationController
       end
 
       render json: authors, status: :ok
+    end
+
+    def check_follow
+      followed_author = Author.find(params[:author_id])
+      if Follow.exists?(follower_id: @current_author_id, followed_id: followed_author.id)
+        render json: { message: 'You are already following the author.', success: true }, status: :ok
+      else
+        render json: { message: 'You are not following the author.', success: false }, status: :ok
+      end
+    end
+
+    def follow_unfollow
+      followed_author = Author.find(params[:author_id])
+      if Follow.exists?(follower_id: @current_author_id, followed_id: followed_author.id)
+        follow = Follow.find_by(follower_id: @current_author_id, followed_id: followed_author.id)
+        follow.destroy
+        followed_author.decrement!(:followers_count)
+        render json: { message: 'You have unfollowed the author.' }, status: :ok
+      else
+        if Follow.create(follower_id: @current_author_id, followed_id: followed_author.id)
+          followed_author.increment!(:followers_count)
+          render json: { message: 'You are now following the author.' }, status: :ok
+        else
+          render json: { error: 'Failed to follow the author.' }, status: :unprocessable_entity
+        end
+      end
     end
 end
