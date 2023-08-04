@@ -22,7 +22,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send the sign-up data to the API using axios POST request
+      localStorage.clear();
       const response = await axios.post('http://127.0.0.1:3000/create/author', formData);
       // Assuming the API responds with a success message or user data
       console.log('Sign-up successful:', response.data);

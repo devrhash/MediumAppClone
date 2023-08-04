@@ -9,6 +9,7 @@ const PostDetail = () => {
   const { postId } = useParams();
 
   const [post, setPosts] = useState([]);
+  
   const navigate=useNavigate();
   useEffect(() => {
     
@@ -22,19 +23,8 @@ const PostDetail = () => {
     
       });
   }, []);
-  const handleDelete=()=>{
-    axios.delete(`http://127.0.0.1:3000/delete/posts/${postId}`)
-      .then((response) => {
-        console.log(response.data);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error('Error fetching posts:', error);
-    
-      });
-
-
-  }
+ 
+ 
   const dateTimeString = post.published_at;
 
 const dateObj = new Date(dateTimeString);
@@ -55,6 +45,9 @@ const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toStri
         <p className='post-topic'>{post.topic}</p>
         <div className='author'>
         <i class="fa fa-user fa-lg"></i>
+        <i class="fa fa-comment"></i>
+        <i class="fa fa-thumbs-down"></i>
+        <i class="fa fa-thumbs-up"></i>
         <p className='author'>{post.author}</p>
         <a href='/'>Follow</a>
         </div>
@@ -65,11 +58,8 @@ const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toStri
         <p className='post-text'>{post.text}</p>
 
       </div>
-      {/* Add edit and delete options */}
-      {/* <div className="edit-delete-options">
-        <Link to={`/post/${postId}/edit`}>Edit</Link>
-        <button onClick={handleDelete}>Delete</button>
-      </div> */}
+     
+      
     </div>
   );
 };
