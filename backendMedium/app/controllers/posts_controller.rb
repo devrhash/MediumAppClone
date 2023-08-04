@@ -63,9 +63,13 @@ class PostsController < ApplicationController
 
 
     def create
+        post_params = JSON.parse(request.body.read)
         @post = Post.new(JSON.parse(request.body.read))
         author_id =  @current_author_id
         @post.author_id = author_id
+        topic = Topic.find(post_params["topic_id"])
+        @post.topic = topic.name
+        @post.reading_time = reading_time(post_params["text"])
         if @post.save
           render json: {message:"Post Has been created"}, status: :created
         else
@@ -77,7 +81,11 @@ class PostsController < ApplicationController
     def edit_post
         @post = Post.find(params[:id])
         post_params = JSON.parse(request.body.read)
+        @post.reading_time = reading_time(post_params["text"])
+        topic = Topic.find(post_params["topic_id"])
+        @post.topic = topic.name
         if @post.update(post_params)
+            
             render json: @post, status: :ok
         else
             render json: @post.errors, status: :unprocessable_entity
@@ -209,5 +217,65 @@ class PostsController < ApplicationController
 
     end
 
+    def add_view
+      post = Post.find(params[:post_id])
+      post.increment!(:view_count)
+      render json: {message: "View Added Successfully"}, status: :ok
+    end
+
+    def top_posts
+      posts = Post.all
+
+      # Calculate the score for each post and store them in a hash
+      post_with_scores = posts.map { |post| [post, calculate_post_score(post)] }
+
+      # Sort posts based on the score in descending order (highest to lowest)
+      top_posts = post_with_scores.sort_by { |_, score| -score }
+
+      # Extract only the posts (ignoring the scores)
+      top_posts = top_posts.map { |post, _| post }
+
+      post_data = top_posts.map do |post|
+        {
+          id: post.id,
+          title: post.title,
+          topic: post.topic,
+          text: post.text,
+          image: post.featured_image,
+          published_at: post.published_at,
+          author_name: post.author.name,
+          likes_count: post.likes_count,
+          comments_count: post.comments_count
+        }
+      end
+
+      render json: post_data, status: :ok
+      
+    end
+
+    def find_recommended_posts
+      topic_id = params[:topic_id]
+      posts_with_similar_topic = Post.where(topic_id: topic_id).order(likes_count: :desc)
+      recommended_posts = posts_with_similar_topic.limit(5)
+      render json: recommended_posts, status: :ok
+    end
+
+    private
+
+    def calculate_post_score(post)
+      score = 0
+    
+      score += post.view_count * 1
+      score += post.likes_count * 2
+      score += post.comments_count * 1
+    
+      return score 
+    end
+
+    def reading_time(text)
+      reading_speed = 200 
+      word_count = text.split.size
+      return (word_count / reading_speed).ceil.clamp(1, Float::INFINITY)
+    end
 
 end

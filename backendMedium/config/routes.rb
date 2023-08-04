@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  # posts
   get '/posts/all', to: 'posts#showAll'
   post '/create/post', to: 'posts#create'
   put '/edit/post/:id', to: 'posts#edit_post'
@@ -13,6 +15,9 @@ Rails.application.routes.draw do
   get 'get/post/filter/date/:date', to: 'posts#filter_by_date'
   get 'get/post/filter/likesAndComments/:filter_param', to: 'posts#filter_likes_commments'
   get '/get/myPost', to: 'posts#my_posts'
+  post '/add/view/:post_id', to: 'posts#add_view'
+  get '/get/topPosts', to: 'posts#top_posts'
+  get '/post/recommended', to: 'posts#find_recommended_posts'
 
   # upload image
   post '/upload', to: 'posts#upload'
@@ -24,6 +29,8 @@ Rails.application.routes.draw do
   get '/author/search', to: 'authors#search_author'
   post '/author/follow/:author_id', to: 'authors#follow_unfollow'
   get '/check/follow/:author_id', to: 'authors#check_follow'
+  put '/authors/edit', to: 'authors#update_author'
+  get '/author/details', to: 'authors#author_details'
   
 
   # like 
@@ -36,5 +43,10 @@ Rails.application.routes.draw do
   post '/comment/create', to: 'comments#create_comment'
   delete '/comment/delete/:comment_id', to: 'comments#remove_comment'
   get '/comment/all/:post_id', to: 'comments#get_comments'
+
+  # topic
+  post '/topic/create', to: 'topics#create_topic'
+  get '/topic/showAll', to: 'topics#show_topics'
+
 end
 

@@ -1,5 +1,5 @@
 class LikesController < ApplicationController
-    before_action :authorize_request, only: [:create_like,:remove_like]
+    before_action :authorize_request, only: [:create_like,:remove_like,:has_liked]
 
     def create_like
         post = Post.find(params[:post_id])
@@ -35,12 +35,12 @@ class LikesController < ApplicationController
 
     def has_liked
         post = Post.find(params[:post_id])
-        author =  Author.find(params[:author_id])
+        author =  Author.find(@current_author_id)
         existing_like = Like.find_by(post: post, author: author)
         if existing_like
-            render json: { message: 'You have already liked this post' }, status: :unprocessable_entity
+            render json: { message: 'You have already liked this post', success:true }, status: :unprocessable_entity
         else
-            render json: { message: 'You have already liked this post' }, status: :created
+            render json: { message: 'You have not liked this post',success: false }, status: :created
         end
     end
 
