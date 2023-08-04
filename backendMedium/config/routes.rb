@@ -54,5 +54,9 @@ Rails.application.routes.draw do
   put '/draft/edit/:id', to: 'drafts#edit_draft'
   get '/draft/get/all', to: 'drafts#showAll'
   delete '/draft/publish/:id', to: 'drafts#publish_draft'
+
+
+  # Payments
+  post '/payment/create', to: 'payments#create_payment'
 end
 
