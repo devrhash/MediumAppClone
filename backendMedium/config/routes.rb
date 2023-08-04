@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'get/post/author/:author_id', to: 'posts#filter_by_author'
   get 'get/post/filter/date/:date', to: 'posts#filter_by_date'
   get 'get/post/filter/likesAndComments/:filter_param', to: 'posts#filter_likes_commments'
+  get '/get/myPost', to: 'posts#my_posts'
 
   # upload image
   post '/upload', to: 'posts#upload'
@@ -21,6 +22,9 @@ Rails.application.routes.draw do
   post '/author/login', to: 'authors#login'
   get '/author/showAll', to: 'authors#show_all_authors'
   get '/author/search', to: 'authors#search_author'
+  post '/author/follow/:author_id', to: 'authors#follow_unfollow'
+  get '/check/follow/:author_id', to: 'authors#check_follow'
+  
 
   # like 
   post '/like/create/:post_id', to: 'likes#create_like'
