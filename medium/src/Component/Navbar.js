@@ -13,6 +13,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('jwtToken');
+    localStorage.clear();
     setIsLoggedIn(false);
   };
 
@@ -46,9 +47,9 @@ const Navbar = () => {
               <div onClick={toggleModal} className="overlay"></div>
               <div className="modal-content">
                 <div className="link-container">
-                  <a href="#posts">Posts</a>
+                  <a href="/mypost">Posts</a>
                   <a href="#saved-posts">Saved Posts</a>
-                  <a href="#logout">Logout</a>
+                  <a onClick={handleLogout}>Logout</a>
                 </div>
                 <button className="close-modal" onClick={toggleModal}>
                   X

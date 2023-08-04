@@ -8,6 +8,7 @@ import EditPost from './EditPost';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignUp from './Component/SignUp';
 import Login from './Component/Login';
+import MyPost from './Component/MyPost';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/post/:postId/edit" element={<EditPost />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/mypost" element={<MyPost />} />
           </Routes>
         </div>
       </div>
