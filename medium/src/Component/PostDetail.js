@@ -11,8 +11,9 @@ const PostDetail = () => {
   const [post, setPosts] = useState([]);
   const [isLiked, setIsLiked] = useState('false');
   const [isFollow, setIsFollow] = useState('false');
+  const [ isSaved, setIsSaved ] = useState('false');
   const jwtToken = localStorage.getItem('jwtToken');
-  const {isSaved,setIsSaved}=useState('false');
+  
   const headers = {
     'authToken': jwtToken
   };
@@ -53,8 +54,9 @@ const PostDetail = () => {
         console.error('Error fetching posts:', error);
 
       });
-      axios.get(` http://127.0.0.1:3000/check/follow/${post.author_id}`,{},{headers})
+    axios.get(`http://127.0.0.1:3000/check/follow/${post.author_id}`, {}, {headers})
       .then((response) => {
+        console.log("Checking Follow");
         setIsFollow(response.data.success);
         console.log(response.data);
       })
@@ -62,11 +64,6 @@ const PostDetail = () => {
         console.error('Error fetching posts:', error);
 
       });
-
-      
-
-
-
 
   }, []);
 
@@ -158,34 +155,34 @@ const PostDetail = () => {
     }
 
   };
-  const handleFollow=()=>{
-    
-    axios.post(`http://127.0.0.1:3000/author/follow/${post.author_id}`,{},{ headers })
-        .then((response) => {
-          setIsFollow(response.data.success);
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log('cannot put there');
-          console.error('Error fetching posts:', error);
+  const handleFollow = () => {
 
-        });
-       
+    axios.post(`http://127.0.0.1:3000/author/follow/${post.author_id}`, {}, {headers})
+      .then((response) => {
+        setIsFollow(response.data.success);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log('cannot put there');
+        console.error('Error fetching posts:', error);
+
+      });
+
 
   }
-  const handleSavePost=()=>{
-    axios.post(`http://127.0.0.1:3000/author/saveForLater/${postId}`,{ headers })
-    .then((response) => {
-      console.log(response.data);
-      setIsSaved(true);
-    })
-    .catch((error) => {
-      console.log('cannot put there');
-      console.error('Error fetching posts:', error);
-      // setIsSaved(true);
 
-    });
-    
+  const handleSavePost = () => {
+    axios.post(`http://127.0.0.1:3000/author/saveForLater/${postId}`, {}, { headers })
+      .then((response) => {
+        console.log(response.data);
+        setIsSaved(true);
+      })
+      .catch((error) => {
+        console.log('cannot put there');
+        console.error('Error fetching posts:', error);
+
+      });
+
   }
   return (
     <div className="post-details-container">
@@ -198,7 +195,7 @@ const PostDetail = () => {
           <div className='top-container'>
             <i class="fa fa-user fa-lg"></i>
             <a href={`/authorprofile/${post.author_id}`} className='author'>{post.author_name}</a>
-            <a onClick={handleFollow} style={{ textDecoration: 'none', marginRight: '15px' }} >{isFollow?'Following':'Follow' }</a>
+            <a onClick={handleFollow} style={{ textDecoration: 'none', marginRight: '15px' }} >{isFollow ? 'Follow' : 'Following'}</a>
           </div>
           <div className='bottom-container'>
             <p className='published-at'>{formattedDate}</p>
@@ -206,12 +203,12 @@ const PostDetail = () => {
             <i onClick={openCommentPopup} class="fa fa-comment"></i>
             <p>{post.comments_count}</p>
             {isLiked ? <i onClick={handleDislike} class="fa fa-thumbs-down"></i> : <i onClick={handleLike} class="fa fa-thumbs-up"></i>}
-            {isLiked?<p>{post.likes_count+1}</p>:<p>{post.likes_count}</p>}
-            
+            {isLiked ? <p>{post.likes_count + 1}</p> : <p>{post.likes_count}</p>}
+
             {
-              isSaved? <i class="bi bi-bookmark-fill"></i>:<i onClick={handleSavePost}  class="bi bi-bookmark"></i>
+              isSaved ? <i class="bi bi-bookmark-fill"></i> : <i onClick={handleSavePost} class="bi bi-bookmark"></i>
             }
-            
+
           </div>
         </div>
         {showCommentPopup && (

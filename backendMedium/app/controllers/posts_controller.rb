@@ -32,7 +32,8 @@ class PostsController < ApplicationController
               likes_count: @post.likes_count,
               comments_count: @post.comments_count,
               published_at: @post.published_at,
-              author_name: @post.author.name
+              author_name: @post.author.name,
+              author_id: @post.author.id
             }
         
   

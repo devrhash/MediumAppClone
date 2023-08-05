@@ -13,7 +13,7 @@ const SavedPost = () => {
     const [change,setChange]=useState('false');
     useEffect(() => {
 
-        axios.get('http://127.0.0.1:3000/get/myPost', { headers })
+        axios.get('http://127.0.0.1:3000/author/savedPosts', {headers})
             .then((response) => {
                 setPosts(response.data);
                 console.log(response.data);

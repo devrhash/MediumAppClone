@@ -24,3 +24,24 @@
   .author-tabs button.active {
     background-color: lightblue;
   }
+
+  .author-section {
+    width: 680px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .author-section h1 {
+    font-size: 24px;
+    margin: 10px 0;
+    font-weight: normal;
+  }
+
+  .author-section p {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #555;
+  }

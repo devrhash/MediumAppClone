@@ -32,7 +32,7 @@ function App() {
             <Route path="/myprofile" element={<MyProfile />} />
             <Route path="/savedpost" element={<SavedPost />} />
             <Route path="/draft" element={<Draft />} />
-            <Route path="/authorprofile/:author_id" element={<AuthorProfile />} />
+            <Route path="/authorprofile/:authorId" element={<AuthorProfile />} />
           
           </Routes>
         </div>

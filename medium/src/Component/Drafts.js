@@ -13,7 +13,7 @@ const Draft = () => {
     const [change,setChange]=useState('false');
     useEffect(() => {
 
-        axios.get('http://127.0.0.1:3000/get/myPost', { headers })
+        axios.get('http://127.0.0.1:3000/draft/get/all', { headers })
             .then((response) => {
                 setPosts(response.data);
                 console.log(response.data);
@@ -46,7 +46,7 @@ const Draft = () => {
 
     return (
         <div>
-            <h2 className='mypost'>My Posts</h2>
+            <h2 className='mypost'>Drafts</h2>
             {posts.map((post) => (
                 <div key={post.id} className="post">
                     
