@@ -37,7 +37,7 @@ const MyProfile = () => {
       </div>
       <div className="author-content">
         {activeTab === 'home' ? (
-          /* Content for Home tab */
+          
           <MyPost/>
         ) : (
           /* Content for About tab */

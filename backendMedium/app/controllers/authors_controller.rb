@@ -1,5 +1,5 @@
 class AuthorsController < ApplicationController
-    before_action :authorize_request, only: [:follow_unfollow,:check_follow,:update_author,:save_for_later_add,:show_all_saved]
+    before_action :authorize_request, only: [:follow_unfollow,:check_follow,:update_author,:save_for_later_add,:show_all_saved,:my_details]
     def create
         author_params = JSON.parse(request.body.read)
         # password = author_params['password']
@@ -84,6 +84,12 @@ class AuthorsController < ApplicationController
     def author_details
       author = Author.find(params[:author_id])
       author = author.slice(:name, :email, :followers_count, :about)
+      render json: author,status: :ok
+    end
+
+    def my_details
+      author = Author.find(@current_author_id)
+      author = author.slice(:id,:name, :email, :followers_count, :about)
       render json: author,status: :ok
     end
 
