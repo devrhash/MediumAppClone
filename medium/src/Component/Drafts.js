@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './MyPost.css'
+import './Draft.css'
 import axios from 'axios';
 
-const MyPost = () => {
+const Draft = () => {
 
     const [posts, setPosts] = useState([]);
     const jwtToken = localStorage.getItem('jwtToken');
@@ -75,4 +75,4 @@ const MyPost = () => {
     );
 };
 
-export default MyPost;
+export default Draft;

@@ -68,7 +68,6 @@ const MainComponent = () => {
               onChange={handleFilterChange}
             />
           </div>
-          {/* Likes input */}
           <div className='filter2'>
           <select value={filters.sortby} onChange={handleFilterChange}>
               <option value=''>Sort By</option>

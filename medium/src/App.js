@@ -9,6 +9,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignUp from './Component/SignUp';
 import Login from './Component/Login';
 import MyPost from './Component/MyPost';
+import AuthorProfile from './Component/AuthorProfile';
+import MyProfile from './Component/MyProfile';
+import SavedPost from './Component/SavedPost';
+import Draft from './Component/Drafts';
 
 function App() {
   return (
@@ -25,6 +29,11 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/mypost" element={<MyPost />} />
+            <Route path="/myprofile" element={<MyProfile />} />
+            <Route path="/savedpost" element={<SavedPost />} />
+            <Route path="/draft" element={<Draft />} />
+            <Route path="/authorprofile/:author_id" element={<AuthorProfile />} />
+          
           </Routes>
         </div>
       </div>
