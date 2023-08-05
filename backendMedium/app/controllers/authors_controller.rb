@@ -1,5 +1,5 @@
 class AuthorsController < ApplicationController
-    before_action :authorize_request, only: [:follow_unfollow,:check_follow,:update_author,:author_details]
+    before_action :authorize_request, only: [:follow_unfollow,:check_follow,:update_author,:author_details,:save_for_later_add,:show_all_saved]
     def create
         author_params = JSON.parse(request.body.read)
         # password = author_params['password']
@@ -85,5 +85,37 @@ class AuthorsController < ApplicationController
       author = Author.find(@current_author_id)
       author = author.slice(:name, :email, :followers_count, :about)
       render json: author,status: :ok
+    end
+
+    def save_for_later_add
+      author = Author.find(@current_author_id)
+      post = Post.find(params[:post_id])
+
+      if !author.save_for_laters.exists?(post.id)
+        author.save_for_laters.create(post:post)
+        render json: {message: "Post saved for later successfully"}, status: :ok
+      else
+        render json: {message: "Post Already Saved"}, status: :unprocessable_entity
+      end
+    end
+
+    def show_all_saved
+      author = Author.find(@current_author_id)
+      saved_posts = author.save_for_laters.includes(post: :author)
+      saved_data = saved_posts.map do |save_for_later|
+        post = save_for_later.post
+        {
+          save_for_later_id: save_for_later.id,
+          post_id: post.id,
+          post_title: post.title,
+          topic: post.topic,
+          featured_image: post.featured_image,
+          text: post.text, 
+          author_name: post.author.name,
+          likes_count: post.likes_count,
+          comments_count: post.comments_count
+        }
+      end
+      render json: saved_data,status: :ok
     end
 end
