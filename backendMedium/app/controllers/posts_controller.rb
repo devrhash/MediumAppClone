@@ -254,7 +254,7 @@ class PostsController < ApplicationController
 
       # Extract only the posts (ignoring the scores)
       top_posts = top_posts.map { |post, _| post }
-
+      top_posts=top_posts.take(5)
       post_data = top_posts.map do |post|
         {
           id: post.id,

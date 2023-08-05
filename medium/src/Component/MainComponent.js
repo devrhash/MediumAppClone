@@ -3,6 +3,8 @@ import PostList from './PostList';
 import './MainComponent.css';
 import axios from 'axios';
 
+import Topics from './Topics';
+
 const MainComponent = () => {
   const [filters, setFilters] = useState({
     author: '',
@@ -81,6 +83,8 @@ const MainComponent = () => {
         <div className='search'>
           <input className="search-bar" type="text" name="search" placeholder="Search Posts" value={filters.search} onChange={handleFilterChange} />
         </div>
+        <h3>Recommended Topics</h3>
+        <Topics/>
 
       </div>
     </div>

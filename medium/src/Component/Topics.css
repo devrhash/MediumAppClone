@@ -1,0 +1,16 @@
+.topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .topic-item {
+    width: auto; 
+    background-color: rgb(242, 242, 242);
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  

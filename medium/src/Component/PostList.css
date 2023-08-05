@@ -24,4 +24,11 @@
   .post p {
     margin: 5px 0;
   }
+  .trend{
+    display: flex;
+  }
+  .trend i{
+    margin-top: 15px;
+    font-size: x-large;
+  }
   

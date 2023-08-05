@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Draft.css'
 import axios from 'axios';
+import MyPost from './MyPost';
 
 const Draft = () => {
 
@@ -46,7 +47,8 @@ const Draft = () => {
 
     return (
         <div>
-            <h2 className='mypost'>Drafts</h2>
+            {/* <h2 className='mypost'>Drafts</h2> */}
+            <MyPost/>
             {posts.map((post) => (
                 <div key={post.id} className="post">
                     

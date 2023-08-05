@@ -47,11 +47,13 @@ const Navbar = () => {
               <div onClick={toggleModal} className="overlay"></div>
               <div className="modal-content">
                 <div className="link-container">
-                  <a href="/myprofile">Profile</a>
-                  <a href="/mypost">Posts</a>
-                  <a href="/savedpost">Saved Posts</a>
-                  <a href="/draft">Draft</a>
-                  <a onClick={handleLogout}>Logout</a>
+                  <a href="/myprofile"><i class="fa fa-user fa-lg"></i> Profile</a>
+                  <a href="/mypost"><i class="bi bi-file-post"></i>  Posts</a>
+                  <a href="/savedpost"><i class="bi bi-bookmarks"></i>Saved Posts</a>
+                  <a href="/draft"> <i class="bi bi-arrow-counterclockwise"></i>Draft</a>
+                  <a href="/followers"><i class="bi bi-person"></i>Followers</a>
+                  <a href="/payment"><i class="bi bi-wallet"></i>Buy Premium</a>
+                  <a onClick={handleLogout}><i class="bi bi-box-arrow-right"></i>Logout</a>
                 </div>
                 <button className="close-modal" onClick={toggleModal}>
                   X

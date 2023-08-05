@@ -12,39 +12,52 @@ const PostDetail = () => {
   const [isLiked, setIsLiked] = useState('false');
   const [isFollow, setIsFollow] = useState('false');
   const [ isSaved, setIsSaved ] = useState('false');
+  const [isComment,setIsComment]=useState('false');
   const jwtToken = localStorage.getItem('jwtToken');
+  var flag=false;
   
   const headers = {
     'authToken': jwtToken
   };
 
-  const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`http://127.0.0.1:3000/like/already/liked?post_id=${postId}`, { headers })
+    async function fetchMainData() {
+      try {
+        await axios.get(`http://127.0.0.1:3000/get/post/${postId}`)
+        .then((response) => {
+          setPosts(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching posts:', error);
+  
+        });
+      } catch (error) {
+        console.error('Error fetching main API data:', error);
+      }
+    }
+
+    fetchMainData();
+  }, []);
+
+
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:3000/like/already/liked?post_id=${postId}`,{headers})
       .then((response) => {
+        console.log("checklikedlogging");
         setIsLiked(response.data.success);
         console.log(response.data);
       })
       .catch((error) => {
+        console.log("checklikedlogging");
         console.error('Error fetching posts:', error);
-
       });
-
-
   }, [isLiked])
 
 
   useEffect(() => {
 
-    axios.get(`http://127.0.0.1:3000/get/post/${postId}`)
-      .then((response) => {
-        setPosts(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching posts:', error);
-
-      });
+   
     axios.get(` http://127.0.0.1:3000/comment/all/${postId}`)
       .then((response) => {
         setComments(response.data);
@@ -84,8 +97,7 @@ const PostDetail = () => {
 
   const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
   const handleDislike = () => {
-
-    axios.delete(`http://127.0.0.1:3000/like/remove/${postId}`, { headers })
+    axios.delete(`http://127.0.0.1:3000/like/remove/${postId}`,{headers})
       .then((response) => {
         setIsLiked(false);
         console.log(response.data);
@@ -96,7 +108,7 @@ const PostDetail = () => {
   }
   const handleLike = () => {
 
-    axios.post(`http://127.0.0.1:3000/like/create/${postId}`, {}, { headers })
+    axios.post(`http://127.0.0.1:3000/like/create/${postId}`,{},{headers})
       .then((response) => {
         setIsLiked(true);
         console.log(response.data);
@@ -104,10 +116,6 @@ const PostDetail = () => {
       .catch((error) => {
         console.error('Error fetching posts:', error);
       });
-
-
-
-
   }
   const openCommentPopup = () => {
     setShowCommentPopup(true);
@@ -133,6 +141,8 @@ const PostDetail = () => {
         .then((response) => {
           console.log("commented");
           // setComments(response.data);
+          setIsComment(true);
+          flag=true;
           console.log(response.data);
         })
         .catch((error) => {
@@ -156,13 +166,14 @@ const PostDetail = () => {
 
   };
   const handleFollow = () => {
-
-    axios.post(`http://127.0.0.1:3000/author/follow/${post.author_id}`, {}, {headers})
+    
+    axios.post(`http://127.0.0.1:3000/author/follow/${post.author_id}`,{},{headers})
       .then((response) => {
-        setIsFollow(response.data.success);
+        setIsFollow((prev)=>!prev);
         console.log(response.data);
       })
       .catch((error) => {
+        console.log(headers);
         console.log('cannot put there');
         console.error('Error fetching posts:', error);
 
@@ -175,7 +186,7 @@ const PostDetail = () => {
     axios.post(`http://127.0.0.1:3000/author/saveForLater/${postId}`, {}, { headers })
       .then((response) => {
         console.log(response.data);
-        setIsSaved(true);
+        setIsSaved(false);
       })
       .catch((error) => {
         console.log('cannot put there');
@@ -201,12 +212,13 @@ const PostDetail = () => {
             <p className='published-at'>{formattedDate}</p>
             <p  >5 Minutes Read</p>
             <i onClick={openCommentPopup} class="fa fa-comment"></i>
-            <p>{post.comments_count}</p>
-            {isLiked ? <i onClick={handleDislike} class="fa fa-thumbs-down"></i> : <i onClick={handleLike} class="fa fa-thumbs-up"></i>}
+            
+            <p>{post.comments_count}</p> 
+            {isLiked ? <i onClick={handleDislike} class="bi bi-hand-thumbs-up-fill fs-4" ></i> : <i onClick={handleLike} class="bi bi-hand-thumbs-up fs-4"></i>}
             {isLiked ? <p>{post.likes_count + 1}</p> : <p>{post.likes_count}</p>}
 
             {
-              isSaved ? <i class="bi bi-bookmark-fill"></i> : <i onClick={handleSavePost} class="bi bi-bookmark"></i>
+              isSaved ?  <i onClick={handleSavePost} class="bi bi-bookmark"></i>:<i class="bi bi-bookmark-fill"></i> 
             }
 
           </div>

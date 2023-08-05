@@ -36,7 +36,7 @@ const AddPost = () => {
     })
     setImageFile(file);
   };
-
+  
   const handleSave = () => {
     const postData = {
         title: title,
@@ -58,6 +58,28 @@ const AddPost = () => {
       navigate('/');
   };
 
+  const handleSaveDraft = () => {
+    const postData = {
+        title: title,
+        topic: topic,
+        text: text,
+        author_id:1,
+        featured_image:imageFile
+      };
+
+
+    axios.post('http://127.0.0.1:3000/draft/create', postData,{headers})
+      .then((response) => {
+        console.log('Post saved!', response.data);
+      })
+      .catch((error) => {
+        console.error('Error saving post:', error);
+        // Implement error handling logic here
+      });
+      navigate('/');
+  };
+
+
   return (
     <div className="add-post-container">
       <h2>Add Post</h2>
@@ -78,9 +100,14 @@ const AddPost = () => {
         <label>Text:</label>
         <textarea value={text} onChange={(e) => setText(e.target.value)} />
       </div>
+      <div className='save-buttons'>
       <button className="save-button" onClick={handleSave}>
         Save
       </button>
+      <button className="save-button" onClick={handleSaveDraft}>
+        Save As Draft
+      </button>
+      </div>
     </div>
   );
 };
