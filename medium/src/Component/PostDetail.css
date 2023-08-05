@@ -66,4 +66,72 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  
+  /* Style for the comment popup */
+ /* Style for the comment popup */
+.comment-popup {
+  position: fixed;
+  top: 50%;
+  right: 20px; /* Adjust this value to control the distance from the right edge */
+  transform: translateY(-50%);
+  width: 300px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.comment-popup .close-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.comment-popup button {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.close-button-container button{
+  background-color: #ccc;
+}
+
+.comment-popup textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+}
+
+.comment-list li {
+  margin-bottom: 5px;
+}
+.comment-box {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+.comment-date {
+  color: gray;
+  font-size: 0.8em;
+  margin-top: 4px;
+}
+
+.comment-text {
+  margin-top: 8px;
+}
+
