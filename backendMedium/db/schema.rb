@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_04_113326) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_05_020434) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -91,9 +91,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_113326) do
   create_table "payments", force: :cascade do |t|
     t.integer "amount"
     t.string "status"
-    t.string "payment_intent_id"
+    t.string "payment_session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "playlist_post_items", force: :cascade do |t|
+    t.integer "playlist_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["playlist_id"], name: "index_playlist_post_items_on_playlist_id"
+    t.index ["post_id"], name: "index_playlist_post_items_on_post_id"
+  end
+
+  create_table "playlists", force: :cascade do |t|
+    t.string "name"
+    t.integer "author_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_playlists_on_author_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -114,6 +131,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_113326) do
     t.index ["topic_id"], name: "index_posts_on_topic_id"
   end
 
+  create_table "save_for_laters", force: :cascade do |t|
+    t.integer "author_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_save_for_laters_on_author_id"
+    t.index ["post_id"], name: "index_save_for_laters_on_post_id"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -128,6 +154,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_113326) do
   add_foreign_key "drafts", "topics"
   add_foreign_key "likes", "authors"
   add_foreign_key "likes", "posts"
+  add_foreign_key "playlist_post_items", "playlists"
+  add_foreign_key "playlist_post_items", "posts"
+  add_foreign_key "playlists", "authors"
   add_foreign_key "posts", "authors"
   add_foreign_key "posts", "topics"
+  add_foreign_key "save_for_laters", "authors"
+  add_foreign_key "save_for_laters", "posts"
 end

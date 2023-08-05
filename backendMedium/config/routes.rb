@@ -31,7 +31,8 @@ Rails.application.routes.draw do
   get '/check/follow/:author_id', to: 'authors#check_follow'
   put '/authors/edit', to: 'authors#update_author'
   get '/author/details', to: 'authors#author_details'
-  
+  post '/author/saveForLater/:post_id', to:'authors#save_for_later_add'
+  get '/author/savedPosts', to: 'authors#show_all_saved'
 
   # like 
   post '/like/create/:post_id', to: 'likes#create_like'
@@ -57,6 +58,15 @@ Rails.application.routes.draw do
 
 
   # Payments
-  post '/payment/create', to: 'payments#create_payment'
+  post '/payments/create', to: 'payments#create_payment'
+  get '/payment/status/:session_id', to: 'payments#check_payment_status'
+  # root 'payments#index'
+
+  # Playlist
+  post '/playlists/create', to: 'playlists#create_playlist'
+  post '/playlists/add/post', to: 'playlists#add_to_playlist'
+  get '/playlists/show/all', to: 'playlists#show_all_playlists'
+  get '/playlists/show/playlist/post/:playlist_id', to: 'playlists#show_playlist_posts'
+
 end
 
