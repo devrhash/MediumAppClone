@@ -90,6 +90,7 @@ const PostList = ({filter}) => {
             <p>Topic: {post.topic}</p>
             {/* <p>{post.text}</p> */}
             <p>Published on: {post.published_at}</p>
+            
             <p>Author: {post.author_name}</p>
             <Link to={`/post/${post.id}`}>View Details</Link>
           </div>

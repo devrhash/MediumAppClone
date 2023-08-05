@@ -10,7 +10,9 @@ const PostDetail = () => {
   const [comments, setComments] = useState([]);
   const [post, setPosts] = useState([]);
   const [isLiked, setIsLiked] = useState('false');
+  const [isFollow, setIsFollow] = useState('false');
   const jwtToken = localStorage.getItem('jwtToken');
+  const {isSaved,setIsSaved}=useState('false');
   const headers = {
     'authToken': jwtToken
   };
@@ -51,6 +53,18 @@ const PostDetail = () => {
         console.error('Error fetching posts:', error);
 
       });
+      axios.get(` http://127.0.0.1:3000/check/follow/${post.author_id}`,{},{headers})
+      .then((response) => {
+        setIsFollow(response.data.success);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+
+      });
+
+      
+
 
 
 
@@ -61,7 +75,7 @@ const PostDetail = () => {
 
   const dateTimeString = post.published_at;
 
-  const dateObj = new Date(dateTimeString);
+  const dateObj = new Date();
 
 
   const year = dateObj.getFullYear();
@@ -144,6 +158,35 @@ const PostDetail = () => {
     }
 
   };
+  const handleFollow=()=>{
+    
+    axios.post(`http://127.0.0.1:3000/author/follow/${post.author_id}`,{},{ headers })
+        .then((response) => {
+          setIsFollow(response.data.success);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log('cannot put there');
+          console.error('Error fetching posts:', error);
+
+        });
+       
+
+  }
+  const handleSavePost=()=>{
+    axios.post(`http://127.0.0.1:3000/author/saveForLater/${postId}`,{ headers })
+    .then((response) => {
+      console.log(response.data);
+      setIsSaved(true);
+    })
+    .catch((error) => {
+      console.log('cannot put there');
+      console.error('Error fetching posts:', error);
+      // setIsSaved(true);
+
+    });
+    
+  }
   return (
     <div className="post-details-container">
 
@@ -151,39 +194,53 @@ const PostDetail = () => {
 
         <h3 className='post-title'>{post.title}</h3>
         <p className='post-topic'>{post.topic}</p>
-        <div className='author'>
-          <i class="fa fa-user fa-lg"></i>
-          <p className='author'>{post.author_name}</p>
-          <a href='/'>Follow</a>
-          <i onClick={openCommentPopup} class="fa fa-comment"></i>
-          {showCommentPopup && (
-            <div className="comment-popup">
-              <div className="close-button-container">
-                <button onClick={closeCommentPopup}>X</button>
-              </div>
-              <textarea
-                rows="4"
-                cols="50"
-                value={newComment}
-                onChange={handleCommentChange}
-                placeholder="Enter your comment..."
-              />
-              <button onClick={handleSubmitComment}>Submit</button>
-              <ul>
-                {comments.map((comment, index) => (
-                  <li key={index} className="comment-box">
-                    <p className="comment-author">{comment.author_name}</p>
-                    <p className="comment-date">{comment.comment_date}</p>
-                    <p className="comment-text">{comment.text}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {isLiked ? <i onClick={handleDislike} class="fa fa-thumbs-down"></i> : <i onClick={handleLike} class="fa fa-thumbs-up"></i>}
+        <div className='author-container'>
+          <div className='top-container'>
+            <i class="fa fa-user fa-lg"></i>
+            <a href={`/authorprofile/${post.author_id}`} className='author'>{post.author_name}</a>
+            <a onClick={handleFollow} style={{ textDecoration: 'none', marginRight: '15px' }} >{isFollow?'Following':'Follow' }</a>
+          </div>
+          <div className='bottom-container'>
+            <p className='published-at'>{formattedDate}</p>
+            <p  >5 Minutes Read</p>
+            <i onClick={openCommentPopup} class="fa fa-comment"></i>
+            <p>{post.comments_count}</p>
+            {isLiked ? <i onClick={handleDislike} class="fa fa-thumbs-down"></i> : <i onClick={handleLike} class="fa fa-thumbs-up"></i>}
+            {isLiked?<p>{post.likes_count+1}</p>:<p>{post.likes_count}</p>}
+            
+            {
+              isSaved? <i class="bi bi-bookmark-fill"></i>:<i onClick={handleSavePost}  class="bi bi-bookmark"></i>
+            }
+            
+          </div>
         </div>
+        {showCommentPopup && (
+          <div className="comment-popup">
+            <div className="close-button-container">
+              <button onClick={closeCommentPopup}>X</button>
+            </div>
+            <textarea
+              rows="4"
+              cols="50"
+              value={newComment}
+              onChange={handleCommentChange}
+              placeholder="Enter your comment..."
+            />
+            <button onClick={handleSubmitComment}>Submit</button>
+            <ul>
+              {comments.map((comment, index) => (
+                <li key={index} className="comment-box">
+                  <p className="comment-author">{comment.author_name}</p>
+                  <p className="comment-date">{comment.comment_date}</p>
+                  <p className="comment-text">{comment.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-        <p className='published-at'>Published On:  {formattedDate}</p>
+
+
         <img src={post.image} alt={post.title} />
 
         <p className='post-text'>{post.text}</p>

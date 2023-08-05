@@ -2,4 +2,8 @@
 .App{
   display: flex;
   overflow: hidden;
+
+}
+.body{
+  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", Times, serif;
 }

@@ -1,0 +1,26 @@
+.author-profile {
+    margin: 20px;
+    padding: 20px;
+    /* border: 1px solid #ccc; */
+  }
+  
+  .author-header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .author-tabs button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .author-tabs button.active {
+    background-color: lightblue;
+  }
