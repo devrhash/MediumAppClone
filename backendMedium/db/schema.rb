@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_05_020434) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_05_032505) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -94,6 +94,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_05_020434) do
     t.string "payment_session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "author_id", null: false
+    t.index ["author_id"], name: "index_payments_on_author_id"
   end
 
   create_table "playlist_post_items", force: :cascade do |t|
@@ -154,6 +156,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_05_020434) do
   add_foreign_key "drafts", "topics"
   add_foreign_key "likes", "authors"
   add_foreign_key "likes", "posts"
+  add_foreign_key "payments", "authors"
   add_foreign_key "playlist_post_items", "playlists"
   add_foreign_key "playlist_post_items", "posts"
   add_foreign_key "playlists", "authors"

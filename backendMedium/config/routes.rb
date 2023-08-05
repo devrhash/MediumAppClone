@@ -30,9 +30,10 @@ Rails.application.routes.draw do
   post '/author/follow/:author_id', to: 'authors#follow_unfollow'
   get '/check/follow/:author_id', to: 'authors#check_follow'
   put '/authors/edit', to: 'authors#update_author'
-  get '/author/details', to: 'authors#author_details'
+  get '/author/details/:author_id', to: 'authors#author_details'
   post '/author/saveForLater/:post_id', to:'authors#save_for_later_add'
   get '/author/savedPosts', to: 'authors#show_all_saved'
+  get '/author/my/details', to: 'authors#my_details'
 
   # like 
   post '/like/create/:post_id', to: 'likes#create_like'
