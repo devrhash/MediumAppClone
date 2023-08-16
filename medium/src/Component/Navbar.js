@@ -1,18 +1,18 @@
-import React from 'react';
-import './Navbar.css';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import "./Navbar.css";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isContainerVisible, setIsContainerVisible] = useState(false);
-  const jwtToken = localStorage.getItem('jwtToken');
+  const jwtToken = localStorage.getItem("jwtToken");
   useEffect(() => {
     setIsLoggedIn(!!jwtToken);
   });
 
   const handleLogout = () => {
-    localStorage.removeItem('jwtToken');
+    localStorage.removeItem("jwtToken");
     localStorage.clear();
     setIsLoggedIn(false);
   };
@@ -24,14 +24,16 @@ const Navbar = () => {
   };
 
   if (modal) {
-    document.body.classList.add('active-modal')
+    document.body.classList.add("active-modal");
   } else {
-    document.body.classList.remove('active-modal')
+    document.body.classList.remove("active-modal");
   }
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <a className="logo" href="/">Medium</a>
+        <a className="logo" href="/">
+          Medium
+        </a>
         <div className="menu">
           <a href="/">Home</a>
           <a href="/add">Write</a>
@@ -43,25 +45,75 @@ const Navbar = () => {
           )}
           <i onClick={toggleModal} class="fa fa-user fa-lg"></i>
           {modal && (
-            <div className="modal">
-              <div onClick={toggleModal} className="overlay"></div>
-              <div className="modal-content">
-                <div className="link-container">
-                  <a href="/myprofile"><i class="fa fa-user fa-lg"></i> Profile</a>
-                  <a href="/mypost"><i class="bi bi-file-post"></i>  Posts</a>
-                  <a href="/savedpost"><i class="bi bi-bookmarks"></i>Saved Posts</a>
-                  <a href="/draft"> <i class="bi bi-arrow-counterclockwise"></i>Draft</a>
-                  <a href="/followers"><i class="bi bi-person"></i>Followers</a>
-                  <a href="/payment"><i class="bi bi-wallet"></i>Buy Premium</a>
-                  <a onClick={handleLogout}><i class="bi bi-box-arrow-right"></i>Logout</a>
+            <div className="commentmodal1" onClick={toggleModal}>
+              <div className="modalContent1">
+                <div className="modalHeader1">
+                  <span class="close" onClick={toggleModal}>
+                    &times;
+                  </span>
+                  <ul>
+                    <li>
+                      <Link
+                        to={"/myprofile"}
+                        style={{ color: "black", fontWeight: "600" }}
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      {" "}
+                      <Link
+                        to={"/mypost"}
+                        style={{ color: "black", fontWeight: "600" }}
+                      >
+                        Posts
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/savedpost"}
+                        style={{ color: "black", fontWeight: "600" }}
+                      >
+                        Saved Posts
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/payment"}
+                        style={{ color: "black", fontWeight: "600" }}
+                      >
+                        Buy Premium
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/topposts"}
+                        style={{ color: "black", fontWeight: "600" }}
+                      >
+                        Top Posts
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/draft"}
+                        style={{ color: "black", fontWeight: "600" }}
+                      >
+                        Drafts
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/followers"}
+                        style={{ color: "black", fontWeight: "600" }}
+                      >
+                        Followers
+                      </Link>
+                    </li>
+                  </ul>
                 </div>
-                <button className="close-modal" onClick={toggleModal}>
-                  X
-                </button>
               </div>
             </div>
           )}
-
         </div>
       </div>
     </nav>

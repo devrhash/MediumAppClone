@@ -31,49 +31,46 @@
     border-radius: 5px 0 0 5px;
     outline: none;
     color: #9DBFAF;
-    margin-left: 20px;
+    margin-left:20px;
 }
 
 .searchTerm:focus {
     color: #00B4CC;
 }
 
-.sortby {
-    margin-left: 10px;
-    width: 100px;
-    height: 40px;
-
+.sortby{
+    margin-left:10px;
+    width:100px;
+    height:40px;
+   
 }
-
 /*Resize the wrap to see the search bar change!*/
 .wrap {
-
+   
     width: 30%;
     position: absolute;
     top: 50%;
-    left: 10%;
+    left:10%;
     transform: translate(-50%, -50%);
 }
-
-.postHeader {
+.postHeader{
     display: flex;
     justify-content: space-between;
     background-color: #cb2d3e;
     position: sticky;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left:20px;
+    padding-right:20px;
     align-items: center;
 }
-
 .postBody {
     box-sizing: border-box;
     font-family: "Quicksand", sans-serif;
     display: grid;
     place-items: center;
-
+   
     background: #7f7fd5;
     background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
-
+    
 }
 
 .postContainer {
@@ -88,7 +85,7 @@
 img {
     max-width: 100%;
     display: block;
-    object-fit: cover;
+    object-fit: cover; 
 }
 
 .card {
@@ -166,47 +163,46 @@ img {
 .user__info>small {
     color: #666;
 }
-
-.postFooter {
-    display: flex;
+.postFooter{
+       display:flex;
     margin-top: 1rem;
-    padding: 1rem;
-    background-color: rgb(235, 195, 64);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    opacity: 0.8;
-    height: 30vh;
-    overflow: scroll;
+        padding: 1rem;
+        background-color: rgb(235, 195, 64);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+       
+        align-items: center;
+        justify-content: center;
+        width:100%;
+        opacity:0.8;
+        height:30vh;
+        overflow:scroll;
 }
 
-.PostinputBox {
-    padding: 10px;
-
-
-    font-weight: 200;
-    font-size: 14px;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    border-radius: 8px;
-    width: 97%;
+.PostinputBox{
+       padding: 10px;
+    
+       
+        font-weight:200;
+        font-size: 14px;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        border-radius: 8px;
+        width:97%;
 }
 
 .comment-box {
-    margin-top: 8px;
-    background-color: rgb(200, 200, 200);
+    margin-top:8px;
+    background-color:rgb(200,200,200);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 16px;
     margin-bottom: 10px;
 }
 
-.commentmodal {
-
+.commentmodal{
+  
     /* Hidden by default */
     position: fixed;
     /* Stay in place */
@@ -226,10 +222,10 @@ img {
     /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
     /* Black w/ opacity */
-    border-radius: 16px;
+    border-radius:16px;
 }
 
-.commentmodal1 {
+.commentmodal1{
 
     /* Hidden by default */
     position: fixed;
@@ -237,7 +233,7 @@ img {
     z-index: 1;
     /* Sit on top */
     padding-top: 50px;
-
+   
     /* Location of the box */
     right: 0;
     top: 100px;
@@ -253,7 +249,6 @@ img {
     /* Black w/ opacity */
     border-radius: 16px;
 }
-
 /* Modal Content */
 .modalContent {
     position: relative;
@@ -310,7 +305,7 @@ img {
 
 /* The Close Button */
 .close {
-    color: grey;
+    color:grey;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -331,91 +326,10 @@ img {
 
 .modalHeader1 {
     padding: 2px 16px;
-    background-color: white;
-    color: black;
+    background-color:white;
+    color:black;
 }
 
 .modalBody {
     padding: 2px 16px;
-}
-
-
-.payment-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-    height: 100vh;
-}
-
-.payment-card {
-    width: 350px;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    height: 500px;
-}
-
-.payment-card:hover {
-    transform: translateY(-5px);
-}
-
-.payment-card-title {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.payment-amount {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.pay-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 50px;
-}
-
-.pay-button:hover {
-    background-color: #0056b3;
-}
-
-.payment-card:nth-child(1):hover {
-    background-color: #FFD700;
-    /* Gold */
-}
-
-.payment-card:nth-child(2):hover {
-    background-color: #32CD32;
-    /* Lime Green */
-}
-
-.payment-card:nth-child(3):hover {
-    background-color: #1E90FF;
-    /* Dodger Blue */
-}
-
-.payment-card:nth-child(4):hover {
-    background-color: #FF6347;
-    /* Tomato */
-}
-
-/* On hover, change the background color to a darker shade */
-.payment-card:hover {
-    transform: scale(1.05);
-    /* Scale up a bit on hover */
 }

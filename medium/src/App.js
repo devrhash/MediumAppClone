@@ -1,42 +1,44 @@
 import './App.css';
 import Navbar from './Component/Navbar';
-import Banner from './Component/Banner';
-import MainComponent from './Component/MainComponent';
-import PostDetail from './Component/PostDetail';
-import AddPost from './AddPost';
-import EditPost from './EditPost';
+
+import AddPost from './Component/AddPost/AddPost';
+import EditPost from './Component/EditPost/EditPost';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SignUp from './Component/SignUp';
-import Login from './Component/Login';
-import MyPost from './Component/MyPost';
-import AuthorProfile from './Component/AuthorProfile';
+import SignUp from './Component/Signup/Signup';
+import Login from './Component/login/Login';
+import MyPost from './Component/Mypost/Mypost';
+
 import MyProfile from './Component/MyProfile';
-import SavedPost from './Component/SavedPost';
-import Draft from './Component/Drafts';
+import SavedPost from './Component/SavedPost/SavedPost';
+import Drafts from './Component/Drafts/Drafts';
 import Followers from './Component/Followers';
 import Payment from './Component/Payment';
-
+import Posts from './Component/posts/Post';
+import Profile from './Component/Profile/Profile';
+import TopPost from './Component/TopPost/TopPost';
+import RevisionHistory from './Component/RevisionHistory.js/RevisionHistory';
 function App() {
   return (
     <Router>
       <div className='app'>
         <Navbar />
-        <Banner />
+    
         <div className="content">
           <Routes>
-            <Route path="/" element={<MainComponent />} />
-            <Route path="/post/:postId" element={<PostDetail />} />
+            <Route path="/" element={<Posts/>} />
             <Route path="/add" element={<AddPost />} />
             <Route path="/post/:postId/edit" element={<EditPost />} />
+              <Route path="/revise/:postId" element={<RevisionHistory />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/mypost" element={<MyPost />} />
             <Route path="/myprofile" element={<MyProfile />} />
             <Route path="/savedpost" element={<SavedPost />} />
-            <Route path="/draft" element={<Draft />} />
+            <Route path="/draft" element={<Drafts />} />
             <Route path="/followers" element={<Followers />} />
             <Route path="/payment" element={<Payment />} />
-            <Route path="/authorprofile/:authorId" element={<AuthorProfile />} />
+            <Route path="/author/:authorId" element={<Profile />} />
+            <Route path="/topposts" element={<TopPost />} />
           
           </Routes>
         </div>

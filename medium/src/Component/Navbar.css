@@ -52,9 +52,10 @@
 .modal, .overlay {
     width: 300px;
     height: 400px;
-    top: 0;
+    top: 0px;
     /* right: 60px; */
     position: fixed;
+    z-index:999;
 }
 
 .overlay {

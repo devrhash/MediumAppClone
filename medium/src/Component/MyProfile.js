@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './MyProfile.css';
-import MyPost from './MyPost';
 import axios from 'axios';
+import MyPost from './Mypost/Mypost';
 
 const MyProfile = () => {
 //   const { authorId } = useParams();
@@ -57,7 +57,7 @@ const MyProfile = () => {
   return (
     <div className="author-profile">
       <div className="author-header">
-        <h2>Author Name</h2>
+        <h2>Author Name:{authorDetails.name}</h2>
         <div className="author-tabs">
           <button
             className={activeTab === 'home' ? 'active' : ''}
@@ -82,7 +82,7 @@ const MyProfile = () => {
           <div>
           
             <div class="author-section">
-    <h1>Number Of Followers: {authorDetails.followers_count}</h1>
+    <h1>Number Of Followers: 3</h1>
     <h1>Email: {authorDetails.email}</h1>
     <p>{authorDetails.about || 'No Bio Added'}</p>
   </div>
