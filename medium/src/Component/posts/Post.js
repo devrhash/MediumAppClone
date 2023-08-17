@@ -198,7 +198,7 @@ export default function Posts() {
     console.log(likedposts);
     console.log(editposts);
     let new_array = [];
-   
+
     for (let x of new_post) {
       let flag = false;
       let flag1 = false;
@@ -230,6 +230,7 @@ export default function Posts() {
       }
       x.save = flag;
       x.like = flag1;
+     
       if (!flag2) {
         if (revise === null) {
           revise = [];
@@ -323,33 +324,32 @@ export default function Posts() {
     }
   }, [filters]);
 
+  const savelist = (e) => {
+    let list = e.target.value;
+    let postid = e.target.id;
+    console.log("hehe" + list);
+    console.log("byebye" + postid);
+    let savetolist = JSON.parse(localStorage.getItem("savetolist"));
 
-  const savelist=(e)=>{
-    let list=e.target.value;
-    let postid=e.target.id;
-    console.log("hehe"+list);
-    console.log("byebye"+postid);
-    let savetolist=JSON.parse(localStorage.getItem("savetolist"));
-    
-    if(savetolist!==null){
-      let flag=false;
-      for(let index=0;index<savetolist.length;index++){
-        if(savetolist[index].id==postid){
-          savetolist[index].list=list;
-          flag=true;
+    if (savetolist !== null) {
+      let flag = false;
+      for (let index = 0; index < savetolist.length; index++) {
+        if (savetolist[index].id == postid) {
+          savetolist[index].list = list;
+          flag = true;
           break;
         }
       }
-      if(!flag){
-        savetolist.push({id:postid,list:list});
+      if (!flag) {
+        savetolist.push({ id: postid, list: list });
       }
+    } else {
+      savetolist = [{ id: postid, list: list }];
     }
-    else{
-      savetolist=[{id:postid,list:list}];
-    }
-    localStorage.setItem('savetolist',JSON.stringify(savetolist));
+    localStorage.setItem("savetolist", JSON.stringify(savetolist));
     console.log(savetolist);
-  }
+    setRefresh(refresh+1);
+  };
   return (
     <div>
       <div className="postHeader">

@@ -95,8 +95,10 @@ const EditPost = () => {
       }
       if (!flag) {
         postData.id = postId;
+        console.log(postData);
         editposts.push(postData);
         revise.push(postData);
+        console.log(revise);
         localStorage.setItem("revisionhistory", JSON.stringify(revise));
       }
     } else {
@@ -114,12 +116,13 @@ const EditPost = () => {
       .put(`http://127.0.0.1:3000/edit/post/${postId}`, postData, { headers })
       .then((response) => {
         console.log("Post saved!", response.data);
+         
       })
       .catch((error) => {
         console.error("Error saving post:", error);
         // Implement error handling logic here
       });
-    navigate("/");
+       navigate("/");
   };
 
   return (
